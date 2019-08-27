@@ -133,39 +133,55 @@ public class StringCalculator
 		return formula;
 	}
 
+	//Used for unit-testing
+	private static void AssertEqual(string actual_formula, string expected_formula)
+	{
+		if (expected_formula != actual_formula)
+		{
+			string msg = String.Format("The actual formula: [{0}] is not equivalent to  expected formula: [{1}]", actual_formula, expected_formula);
+			throw new Exception(msg);
+		}
+	}
+
+	//Unit Tests
+	private static void testBasicAddition()
+	{
+		AssertEqual(add(""), "0 = 0");
+		AssertEqual(add("//"), "0 = 0");
+		AssertEqual(add("2"), "2 = 2");
+		AssertEqual(add("2,2"), "2 + 2 = 4");
+		AssertEqual(add("1\n2,2"), "1 + 2 + 2 = 5");
+		AssertEqual(add("5,tytyt"), "5 + 0 = 5");
+		AssertEqual(add("5,1001"), "5 + 0 = 5");
+		AssertEqual(add("2,4,rrrr,1001,6"), "2 + 4 + 0 + 0 + 6 = 12");
+	}
+	
+	private static void testAdvanceAddition()
+	{
+		//Support 1 custom delimiter of one character length
+		AssertEqual(add("//;\n2;5"), "2 + 5 = 7");
+		
+		//Support 1 custom delimiter of any length
+		AssertEqual(add("//[***]\n11***22***33"), "11 + 22 + 33 = 66");
+		
+		//Support multiple delimiters of any length
+		AssertEqual(add("//[*][!!][rrr]\n11rrr22*33!!44"), "11 + 22 + 33 + 44 = 110");
+		
+		//Using "//" as a custom delimiter
+		AssertEqual(add("//[//]\n11//22//33"), "11 + 22 + 33 = 66");
+
+		//Using "]" as a custom delimiter
+		AssertEqual(add("//[]]\n11]22]33"), "11 + 22 + 33 = 66");
+
+		//Using "-" as a custom delimiter
+		AssertEqual(add("//[-]\n11-22-33"), "11 + 22 + 33 = 66");
+	}
+
 
 	public static void Main()
 	{
-		//step 1 unit tests
-		Console.WriteLine(add("5000"));
-		Console.WriteLine(add("1,20"));
-		Console.WriteLine(add(""));
-		Console.WriteLine(add("5,tytyt"));
-
-		//step 2 unit tests
-		Console.WriteLine(add("5,3,4"));
-		Console.WriteLine(add("5,3,4,5"));
-
-		//step 3 unit tests
-		Console.WriteLine(add("1\n2,3"));
-		Console.WriteLine(add("1\n2\n3"));
-
-		//step 4 unit tests
-		Console.WriteLine(add("-2,6"));
-		Console.WriteLine(add("-6"));
-
-		//step 5 unit tests
-		Console.WriteLine(add("2,1001,6"));
-		Console.WriteLine(add("1000,1001,6"));
-
-		//step 6 unit tests
-		Console.WriteLine(add("//;\n2;5"));
-
-		//step 7 unit tests
-		Console.WriteLine(add("//[***]\n11***22***33"));
-
-		//step 8 unit tests
-		Console.WriteLine(add("//[*][!!][rrr]\n11rrr22*33!!44"));
+		testBasicAddition();
+		testAdvanceAddition();
 
 	}
 
