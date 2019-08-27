@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 public class StringCalculator
 {
 	public static string add(string input)
@@ -19,6 +22,7 @@ public class StringCalculator
 	{
 		return calculate(input, "*", (x, y) => x * y);
 	}
+
 
 	private static string calculate(string input, string optr, Func<double, double, double> lambda)
 	{
@@ -96,6 +100,14 @@ public class StringCalculator
 		return parsedString;
 	}
 
+
+	private static bool isNumber(string item)
+	{
+		int n; double m;
+		return int.TryParse(item, out n) || double.TryParse(item, out m);
+	}
+
+
 	private static double convertToNumber(string item)
 	{
 		double convertedNumber = Convert.ToDouble(item);
@@ -108,11 +120,6 @@ public class StringCalculator
 		return convertedNumber;
 	}
 
-	private static bool isNumber(string item)
-	{
-		int n; double m;
-		return int.TryParse(item, out n) || double.TryParse(item, out m);
-	}
 
 	private static string displayFormula(string optr, List<String> stringNumbers, double result)
 	{
@@ -132,7 +139,8 @@ public class StringCalculator
 		formula += String.Format(" = {0}", result);
 		return formula;
 	}
-
+	
+	
 	//Used for unit-testing
 	private static void AssertEqual(string actual_formula, string expected_formula)
 	{
@@ -142,7 +150,8 @@ public class StringCalculator
 			throw new Exception(msg);
 		}
 	}
-
+	
+	
 	//Unit Tests
 	private static void testBasicAddition()
 	{
@@ -156,6 +165,7 @@ public class StringCalculator
 		AssertEqual(add("2,4,rrrr,1001,6"), "2 + 4 + 0 + 0 + 6 = 12");
 	}
 	
+
 	private static void testAdvanceAddition()
 	{
 		//Support 1 custom delimiter of one character length
@@ -182,7 +192,5 @@ public class StringCalculator
 	{
 		testBasicAddition();
 		testAdvanceAddition();
-
 	}
-
 }
