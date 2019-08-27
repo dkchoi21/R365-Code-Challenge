@@ -126,6 +126,13 @@ public class StringCalculator
 
 		//step 6 unit tests
 		Console.WriteLine(add("//;\n2;5"));
+
+		//step 7 unit tests
+		Console.WriteLine(add("//[***]\n11***22***33"));
+		
+		//step 8 unit tests
+		Console.WriteLine(add("//[*][!!][rrr]\n11rrr22*33!!44"));
+
 	}
 
 }
