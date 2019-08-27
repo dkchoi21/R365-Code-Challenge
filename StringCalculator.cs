@@ -53,6 +53,12 @@ public class StringCalculator
 	private static double convertToNumber(string item)
 	{
 		double convertedNumber = Convert.ToDouble(item);
+		//exception thrown for negative integers
+		if (convertedNumber < 0)
+		{
+			throw new Exception("Must be a non-negative integer");
+		}
+
 		return convertedNumber;
 	}
 
@@ -78,6 +84,10 @@ public class StringCalculator
 		//step 3 unit tests
 		Console.WriteLine(add("1\n2,3"));
 		Console.WriteLine(add("1\n2\n3"));
+
+		//step 3 unit tests
+		Console.WriteLine(add("-12,3"));
+		Console.WriteLine(add("-1\n2\n3"));
 	}
 
 }
