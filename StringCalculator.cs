@@ -41,12 +41,13 @@ public class StringCalculator
 		for (int i = 0; i < parsedString.Count; i++)
 		{
 			string item = parsedString[i];
-			//if item is not a number, then replace with "0"
-			if (!isNumber(item))
+			//if item is not a number or if it is a number greater than 1000, then replace with "0"
+			if (!isNumber(item) || convertToNumber(item) > 1000)
 			{
 				parsedString[i] = "0";
 			}
 		}
+
 		return parsedString;
 	}
 
