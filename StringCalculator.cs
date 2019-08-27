@@ -8,7 +8,7 @@ public class StringCalculator
 	private static double calculate(string input, string optr, Func<double, double, double> lambda)
 	{
 
-		string[] delimiter = new string[]{","};
+		string[] delimiter = new string[]{"\n", ","};
 
 		//separates string of numbers using given delimiter
 		List<string> parsedNumbers = parseUsingDelimiter(input, delimiter);
@@ -75,7 +75,9 @@ public class StringCalculator
 		Console.WriteLine(add("5,3,4"));
 		Console.WriteLine(add("5,3,4,5"));
 
-
+		//step 3 unit tests
+		Console.WriteLine(add("1\n2,3"));
+		Console.WriteLine(add("1\n2\n3"));
 	}
 
 }
