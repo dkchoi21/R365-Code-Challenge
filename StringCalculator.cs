@@ -1,26 +1,26 @@
 public class StringCalculator
 {
-	public static double add(string input)
+	public static string add(string input)
 	{
 		return calculate(input, "+", (x, y) => x + y);
 	}
 
-	public static double subtract(string input)
+	public static string subtract(string input)
 	{
 		return calculate(input, "-", (x, y) => x - y);
 	}
 
-	public static double divide(string input)
+	public static string divide(string input)
 	{
 		return calculate(input, "/", (x, y) => x / y);
 	}
 
-	public static double multiply(string input)
+	public static string multiply(string input)
 	{
 		return calculate(input, "*", (x, y) => x * y);
 	}
 
-	private static double calculate(string input, string optr, Func<double, double, double> lambda)
+	private static string calculate(string input, string optr, Func<double, double, double> lambda)
 	{
 		//separates delimiter(s) from number
 		Tuple<string[], string> tuple = separateDelimiterFromNumber(input);
@@ -44,7 +44,7 @@ public class StringCalculator
 			result = lambda(result, number);
 		}
 
-		return result;
+		return displayFormula(optr, parsedNumbers, result);
 	}
 
 
@@ -114,7 +114,24 @@ public class StringCalculator
 		return int.TryParse(item, out n) || double.TryParse(item, out m);
 	}
 
-
+	private static string displayFormula(string optr, List<String> stringNumbers, double result)
+	{
+		string formula = "";
+		for (int i = 0; i < stringNumbers.Count; i++)
+		{
+			string operand = stringNumbers[i];
+			if (i == stringNumbers.Count - 1)
+			{
+				formula += operand;
+			}
+			else
+			{
+				formula += String.Format("{0} {1} ", operand, optr);;
+			}
+		}
+		formula += String.Format(" = {0}", result);
+		return formula;
+	}
 
 
 	public static void Main()
