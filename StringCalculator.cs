@@ -23,7 +23,6 @@ public class StringCalculator
 		return calculate(input, "*", (x, y) => x * y);
 	}
 
-
 	private static string calculate(string input, string optr, Func<double, double, double> lambda)
 	{
 		//separates delimiter(s) from number
@@ -51,7 +50,6 @@ public class StringCalculator
 		return displayFormula(optr, parsedNumbers, result);
 	}
 
-
 	private static Tuple<string[], string> separateDelimiterFromNumber(string input)
 	{
 		string[] defaultDelimiter = new string[]{"\n", ","};
@@ -68,20 +66,20 @@ public class StringCalculator
 			list.AddRange(customDelimiter);
 			list.AddRange(defaultDelimiter);
 			string[] delimiter = list.ToArray();
-			
-			if (inputArray.Count == 1) {
+			if (inputArray.Count == 1)
+			{
 				numbers = "";
 			}
 			else
 			{
 				numbers = inputArray[1];
 			}
+
 			return new Tuple<string[], string>(delimiter, numbers);
 		}
 
 		return new Tuple<string[], string>(defaultDelimiter, numbers);
 	}
-
 
 	private static List<string> parseUsingDelimiter(string input, string[] delimiters)
 	{
@@ -100,13 +98,12 @@ public class StringCalculator
 		return parsedString;
 	}
 
-
 	private static bool isNumber(string item)
 	{
-		int n; double m;
+		int n;
+		double m;
 		return int.TryParse(item, out n) || double.TryParse(item, out m);
 	}
-
 
 	private static double convertToNumber(string item)
 	{
@@ -114,12 +111,11 @@ public class StringCalculator
 		//exception thrown for negative integers
 		if (convertedNumber < 0)
 		{
-			throw new Exception("Must be a non-negative integer");
+			throw new Exception("Must be a non-negative number");
 		}
 
 		return convertedNumber;
 	}
-
 
 	private static string displayFormula(string optr, List<String> stringNumbers, double result)
 	{
@@ -133,25 +129,26 @@ public class StringCalculator
 			}
 			else
 			{
-				formula += String.Format("{0} {1} ", operand, optr);;
+				formula += String.Format("{0} {1} ", operand, optr);
+				;
 			}
 		}
+
 		formula += String.Format(" = {0}", result);
 		return formula;
 	}
-	
-	
+
 	//Used for unit-testing
 	private static void AssertEqual(string actual_formula, string expected_formula)
 	{
+		
 		if (expected_formula != actual_formula)
 		{
 			string msg = String.Format("The actual formula: [{0}] is not equivalent to  expected formula: [{1}]", actual_formula, expected_formula);
 			throw new Exception(msg);
 		}
 	}
-	
-	
+
 	//Unit Tests
 	private static void testBasicAddition()
 	{
@@ -163,30 +160,32 @@ public class StringCalculator
 		AssertEqual(add("5,tytyt"), "5 + 0 = 5");
 		AssertEqual(add("5,1001"), "5 + 0 = 5");
 		AssertEqual(add("2,4,rrrr,1001,6"), "2 + 4 + 0 + 0 + 6 = 12");
+		
+		//negative numbers will be denied; suppose to fail
+		try{
+			add("-1, 20");
+			AssertEqual("False", "True");
+		}
+		catch {
+			AssertEqual("True", "True");
+		}
+			
 	}
-	
 
 	private static void testAdvanceAddition()
 	{
 		//Support 1 custom delimiter of one character length
 		AssertEqual(add("//;\n2;5"), "2 + 5 = 7");
-		
 		//Support 1 custom delimiter of any length
 		AssertEqual(add("//[***]\n11***22***33"), "11 + 22 + 33 = 66");
-		
 		//Support multiple delimiters of any length
 		AssertEqual(add("//[*][!!][rrr]\n11rrr22*33!!44"), "11 + 22 + 33 + 44 = 110");
-		
 		//Using "//" as a custom delimiter
 		AssertEqual(add("//[//]\n11//22//33"), "11 + 22 + 33 = 66");
-
-		//Using "]" as a custom delimiter
-		AssertEqual(add("//[]]\n11]22]33"), "11 + 22 + 33 = 66");
-
 		//Using "-" as a custom delimiter
 		AssertEqual(add("//[-]\n11-22-33"), "11 + 22 + 33 = 66");
+		
 	}
-
 
 	public static void Main()
 	{
