@@ -30,7 +30,6 @@ public class StringCalculator
 		string[] delimiter = tuple.Item1;
 		string numbers = tuple.Item2;
 		
-		Console.WriteLine(numbers);
 		//separates string of numbers using given delimiter
 		List<string> parsedNumbers = parseUsingDelimiter(numbers, delimiter);
 		double result = -1;
