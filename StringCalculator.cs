@@ -29,6 +29,8 @@ public class StringCalculator
 		Tuple<string[], string> tuple = separateDelimiterFromNumber(input);
 		string[] delimiter = tuple.Item1;
 		string numbers = tuple.Item2;
+		
+		Console.WriteLine(numbers);
 		//separates string of numbers using given delimiter
 		List<string> parsedNumbers = parseUsingDelimiter(numbers, delimiter);
 		double result = -1;
@@ -59,8 +61,9 @@ public class StringCalculator
 		{
 			//split on "\n" to separate delimiters & number --> [[{delimiter1}]...[{delimiterN}]], {numbers}]
 			List<string> inputArray = new List<string>(input.Substring(2).Split(new[]{'\n'}, 2));
-			//split on on brackets to separate delimiters --> [{delimiter1}, {delimiter2},...{delimiterN}]
+			//split on brackets to separate delimiters --> [{delimiter1}, {delimiter2},...{delimiterN}]
 			string[] customDelimiter = inputArray[0].Split(new string[]{"[", "]"}, StringSplitOptions.RemoveEmptyEntries);
+			
 			//combine default delimiters & custom delimiters
 			List<string> list = new List<string>();
 			list.AddRange(customDelimiter);
@@ -111,7 +114,7 @@ public class StringCalculator
 		//exception thrown for negative integers
 		if (convertedNumber < 0)
 		{
-			throw new Exception("Must be a non-negative number");
+			throw new ArgumentException("Must be a non-negative number");
 		}
 
 		return convertedNumber;
@@ -166,7 +169,7 @@ public class StringCalculator
 			add("-1, 20");
 			AssertEqual("False", "True");
 		}
-		catch {
+		catch (ArgumentException) {
 			AssertEqual("True", "True");
 		}
 			
@@ -185,6 +188,9 @@ public class StringCalculator
 		//Using "-" as a custom delimiter
 		AssertEqual(add("//[-]\n11-22-33"), "11 + 22 + 33 = 66");
 		
+		//Using "]" as a custom delimiter --> logic does not take this into account
+		//I split the delimiters based on the bracket but the right bracket is used as a delimiter
+		//AssertEqual(add("//[]]\n11]22]33"), "11 + 22 + 33 = 66");
 	}
 
 	public static void Main()
