@@ -1,8 +1,23 @@
 public class StringCalculator
 {
-	public static string add(string input)
+	public static double add(string input)
 	{
 		return calculate(input, "+", (x, y) => x + y);
+	}
+
+	public static double subtract(string input)
+	{
+		return calculate(input, "-", (x, y) => x - y);
+	}
+
+	public static double divide(string input)
+	{
+		return calculate(input, "/", (x, y) => x / y);
+	}
+
+	public static double multiply(string input)
+	{
+		return calculate(input, "*", (x, y) => x * y);
 	}
 
 	private static double calculate(string input, string optr, Func<double, double, double> lambda)
@@ -100,6 +115,8 @@ public class StringCalculator
 	}
 
 
+
+
 	public static void Main()
 	{
 		//step 1 unit tests
@@ -129,7 +146,7 @@ public class StringCalculator
 
 		//step 7 unit tests
 		Console.WriteLine(add("//[***]\n11***22***33"));
-		
+
 		//step 8 unit tests
 		Console.WriteLine(add("//[*][!!][rrr]\n11rrr22*33!!44"));
 
