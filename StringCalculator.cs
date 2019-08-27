@@ -65,10 +65,16 @@ public class StringCalculator
 
 	public static void Main()
 	{
+		//step 1 unit tests
 		Console.WriteLine(add("5000"));
 		Console.WriteLine(add("1,20"));
 		Console.WriteLine(add(""));
 		Console.WriteLine(add("5,tytyt"));
+
+		//step 2 unit tests
+		Console.WriteLine(add("5,3,4"));
+		Console.WriteLine(add("5,3,4,5"));
+
 
 	}
 
